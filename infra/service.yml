@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: person-service
+  labels:
+    app: person-service
+    service: person-service
 spec:
+  ports:
+  - port: 8080
+    name: http
   selector:
     app: person-service
-  type: LoadBalancer
-  ports:
-  - name: http
-    protocol: TCP
-    port: 8080
-    targetPort: 8080 

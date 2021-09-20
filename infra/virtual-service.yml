@@ -6,13 +6,13 @@ spec:
   hosts:
   - "*"
   gateways:
-    - person-gateway
+  - person-gateway
   http:
-  - match: 
-    - uri: 
-        prefix: /person-api
+  - match:
+    - uri:
+        prefix: /
     route:
-    - destination: 
+    - destination:
         host: person-service
-        port: 
+        port:
           number: 8080
