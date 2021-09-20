@@ -1,20 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  person-service
-  namespace: default
+  name:  person-deployment
+  namespace: dev
   labels:
-    app:  person-service
+    app:  person-deployment
     version: v1
 spec:
   selector:
     matchLabels:
-      app: person-service
+      app: person-deployment
   replicas: 1
   template:
     metadata:
+      annotations:
+          sidecar.istio.io/inject: "true"
       labels:
-        app:  person-service
+        app:  person-deployment
     spec:
       containers:
       - name:  person-service
@@ -27,5 +29,14 @@ spec:
             cpu: 200m
             memory: 200Mi
         imagePullPolicy: IfNotPresent
+        # readinessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8080
+        #   initialDelaySeconds: 5
+        #   timeoutSeconds: 2
+        #   successThreshold: 1
+        #   failureThreshold: 3
+        #   periodSeconds: 10
         ports:
           - containerPort: 8080
