@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  address-deployment
+  namespace: dev
+  labels:
+    app:  address-deployment
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: address-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  address-deployment
+    spec:
+      containers:
+      - name:  address-service
+        image:  address:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8081
